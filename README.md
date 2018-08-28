@@ -5,124 +5,11 @@ You can find the most recent version of this guide [here](https://github.com/fac
 
 ## Table of Contents
 
-- [Updating to New Releases](#updating-to-new-releases)
-- [Sending Feedback](#sending-feedback)
-- [Folder Structure](#folder-structure)
-- [Available Scripts](#available-scripts)
-  - [npm start](#npm-start)
-  - [npm test](#npm-test)
-  - [npm run build](#npm-run-build)
-  - [npm run eject](#npm-run-eject)
-- [Supported Browsers](#supported-browsers)
-- [Supported Language Features and Polyfills](#supported-language-features-and-polyfills)
-- [Syntax Highlighting in the Editor](#syntax-highlighting-in-the-editor)
-- [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
-- [Debugging in the Editor](#debugging-in-the-editor)
-- [Formatting Code Automatically](#formatting-code-automatically)
-- [Changing the Page `<title>`](#changing-the-page-title)
-- [Installing a Dependency](#installing-a-dependency)
-- [Importing a Component](#importing-a-component)
-- [Code Splitting](#code-splitting)
-- [Adding a Stylesheet](#adding-a-stylesheet)
-- [Post-Processing CSS](#post-processing-css)
-- [Adding a CSS Preprocessor (Sass, Less etc.)](#adding-a-css-preprocessor-sass-less-etc)
-- [Adding Images, Fonts, and Files](#adding-images-fonts-and-files)
-- [Using the `public` Folder](#using-the-public-folder)
-  - [Changing the HTML](#changing-the-html)
-  - [Adding Assets Outside of the Module System](#adding-assets-outside-of-the-module-system)
-  - [When to Use the `public` Folder](#when-to-use-the-public-folder)
-- [Using Global Variables](#using-global-variables)
-- [Adding Bootstrap](#adding-bootstrap)
-  - [Using a Custom Theme](#using-a-custom-theme)
-- [Adding Flow](#adding-flow)
-- [Adding a Router](#adding-a-router)
-- [Adding Custom Environment Variables](#adding-custom-environment-variables)
-  - [Referencing Environment Variables in the HTML](#referencing-environment-variables-in-the-html)
-  - [Adding Temporary Environment Variables In Your Shell](#adding-temporary-environment-variables-in-your-shell)
-  - [Adding Development Environment Variables In `.env`](#adding-development-environment-variables-in-env)
-- [Can I Use Decorators?](#can-i-use-decorators)
-- [Fetching Data with AJAX Requests](#fetching-data-with-ajax-requests)
-- [Integrating with an API Backend](#integrating-with-an-api-backend)
-  - [Node](#node)
-  - [Ruby on Rails](#ruby-on-rails)
-- [Proxying API Requests in Development](#proxying-api-requests-in-development)
-  - ["Invalid Host Header" Errors After Configuring Proxy](#invalid-host-header-errors-after-configuring-proxy)
-  - [Configuring the Proxy Manually](#configuring-the-proxy-manually)
-  - [Configuring a WebSocket Proxy](#configuring-a-websocket-proxy)
-- [Using HTTPS in Development](#using-https-in-development)
-- [Generating Dynamic `<meta>` Tags on the Server](#generating-dynamic-meta-tags-on-the-server)
-- [Pre-Rendering into Static HTML Files](#pre-rendering-into-static-html-files)
-- [Injecting Data from the Server into the Page](#injecting-data-from-the-server-into-the-page)
-- [Running Tests](#running-tests)
-  - [Filename Conventions](#filename-conventions)
-  - [Command Line Interface](#command-line-interface)
-  - [Version Control Integration](#version-control-integration)
-  - [Writing Tests](#writing-tests)
-  - [Testing Components](#testing-components)
-  - [Using Third Party Assertion Libraries](#using-third-party-assertion-libraries)
-  - [Initializing Test Environment](#initializing-test-environment)
-  - [Focusing and Excluding Tests](#focusing-and-excluding-tests)
-  - [Coverage Reporting](#coverage-reporting)
-  - [Continuous Integration](#continuous-integration)
-  - [Disabling jsdom](#disabling-jsdom)
-  - [Snapshot Testing](#snapshot-testing)
-  - [Editor Integration](#editor-integration)
-- [Debugging Tests](#debugging-tests)
-  - [Debugging Tests in Chrome](#debugging-tests-in-chrome)
-  - [Debugging Tests in Visual Studio Code](#debugging-tests-in-visual-studio-code)
-- [Developing Components in Isolation](#developing-components-in-isolation)
-  - [Getting Started with Storybook](#getting-started-with-storybook)
-  - [Getting Started with Styleguidist](#getting-started-with-styleguidist)
-- [Publishing Components to npm](#publishing-components-to-npm)
-- [Making a Progressive Web App](#making-a-progressive-web-app)
-  - [Opting Out of Caching](#opting-out-of-caching)
-  - [Offline-First Considerations](#offline-first-considerations)
-  - [Progressive Web App Metadata](#progressive-web-app-metadata)
-- [Analyzing the Bundle Size](#analyzing-the-bundle-size)
-- [Deployment](#deployment)
-  - [Static Server](#static-server)
-  - [Other Solutions](#other-solutions)
-  - [Serving Apps with Client-Side Routing](#serving-apps-with-client-side-routing)
-  - [Building for Relative Paths](#building-for-relative-paths)
-  - [Azure](#azure)
-  - [Firebase](#firebase)
-  - [GitHub Pages](#github-pages)
-  - [Heroku](#heroku)
-  - [Netlify](#netlify)
-  - [Now](#now)
-  - [S3 and CloudFront](#s3-and-cloudfront)
-  - [Surge](#surge)
-- [Advanced Configuration](#advanced-configuration)
-- [Troubleshooting](#troubleshooting)
-  - [`npm start` doesn’t detect changes](#npm-start-doesnt-detect-changes)
-  - [`npm test` hangs on macOS Sierra](#npm-test-hangs-on-macos-sierra)
-  - [`npm run build` exits too early](#npm-run-build-exits-too-early)
-  - [`npm run build` fails on Heroku](#npm-run-build-fails-on-heroku)
-  - [`npm run build` fails to minify](#npm-run-build-fails-to-minify)
-  - [Moment.js locales are missing](#momentjs-locales-are-missing)
-- [Alternatives to Ejecting](#alternatives-to-ejecting)
-- [Something Missing?](#something-missing)
-
-## Updating to New Releases
-
-Create React App is divided into two packages:
-
-* `create-react-app` is a global command-line utility that you use to create new projects.
-* `react-scripts` is a development dependency in the generated projects (including this one).
-
-You almost never need to update `create-react-app` itself: it delegates all the setup to `react-scripts`.
-
-When you run `create-react-app`, it always creates the project with the latest version of `react-scripts` so you’ll get all the new features and improvements in newly created apps automatically.
-
-To update an existing project to a new version of `react-scripts`, [open the changelog](https://github.com/facebookincubator/create-react-app/blob/master/CHANGELOG.md), find the version you’re currently on (check `package.json` in this folder if you’re not sure), and apply the migration instructions for the newer versions.
-
-In most cases bumping the `react-scripts` version in `package.json` and running `npm install` in this folder should be enough, but it’s good to consult the [changelog](https://github.com/facebookincubator/create-react-app/blob/master/CHANGELOG.md) for potential breaking changes.
-
-We commit to keeping the breaking changes minimal so you can upgrade `react-scripts` painlessly.
+TODO
 
 ## Sending Feedback
 
-We are always open to [your feedback](https://github.com/facebookincubator/create-react-app/issues).
+We are always open to [your feedback](https://github.com/yukinagae/codereader/issues).
 
 ## Folder Structure
 
@@ -204,59 +91,6 @@ By default, the generated project uses the latest version of React.
 
 You can refer [to the React documentation](https://reactjs.org/docs/react-dom.html#browser-support) for more information about supported browsers.
 
-## Supported Language Features and Polyfills
-
-This project supports a superset of the latest JavaScript standard.<br>
-In addition to [ES6](https://github.com/lukehoban/es6features) syntax features, it also supports:
-
-* [Exponentiation Operator](https://github.com/rwaldron/exponentiation-operator) (ES2016).
-* [Async/await](https://github.com/tc39/ecmascript-asyncawait) (ES2017).
-* [Object Rest/Spread Properties](https://github.com/sebmarkbage/ecmascript-rest-spread) (stage 3 proposal).
-* [Dynamic import()](https://github.com/tc39/proposal-dynamic-import) (stage 3 proposal)
-* [Class Fields and Static Properties](https://github.com/tc39/proposal-class-public-fields) (part of stage 3 proposal).
-* [JSX](https://facebook.github.io/react/docs/introducing-jsx.html) and [Flow](https://flowtype.org/) syntax.
-
-Learn more about [different proposal stages](https://babeljs.io/docs/plugins/#presets-stage-x-experimental-presets-).
-
-While we recommend using experimental proposals with some caution, Facebook heavily uses these features in the product code, so we intend to provide [codemods](https://medium.com/@cpojer/effective-javascript-codemods-5a6686bb46fb) if any of these proposals change in the future.
-
-Note that **the project only includes a few ES6 [polyfills](https://en.wikipedia.org/wiki/Polyfill)**:
-
-* [`Object.assign()`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) via [`object-assign`](https://github.com/sindresorhus/object-assign).
-* [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) via [`promise`](https://github.com/then/promise).
-* [`fetch()`](https://developer.mozilla.org/en/docs/Web/API/Fetch_API) via [`whatwg-fetch`](https://github.com/github/fetch).
-
-If you use any other ES6+ features that need **runtime support** (such as `Array.from()` or `Symbol`), make sure you are including the appropriate polyfills manually, or that the browsers you are targeting already support them.
-
-Also note that using some newer syntax features like `for...of` or `[...nonArrayValue]` causes Babel to emit code that depends on ES6 runtime features and might not work without a polyfill. When in doubt, use [Babel REPL](https://babeljs.io/repl/) to see what any specific syntax compiles down to.
-
-## Syntax Highlighting in the Editor
-
-To configure the syntax highlighting in your favorite text editor, head to the [relevant Babel documentation page](https://babeljs.io/docs/editors) and follow the instructions. Some of the most popular editors are covered.
-
-## Displaying Lint Output in the Editor
-
->Note: this feature is available with `react-scripts@0.2.0` and higher.<br>
->It also only works with npm 3 or higher.
-
-Some editors, including Sublime Text, Atom, and Visual Studio Code, provide plugins for ESLint.
-
-They are not required for linting. You should see the linter output right in your terminal as well as the browser console. However, if you prefer the lint results to appear right in your editor, there are some extra steps you can do.
-
-You would need to install an ESLint plugin for your editor first. Then, add a file called `.eslintrc` to the project root:
-
-```js
-{
-  "extends": "react-app"
-}
-```
-
-Now your editor should report the linting warnings.
-
-Note that even if you edit your `.eslintrc` file further, these changes will **only affect the editor integration**. They won’t affect the terminal and in-browser lint output. This is because Create React App intentionally provides a minimal set of rules that find common mistakes.
-
-If you want to enforce a coding style for your project, consider using [Prettier](https://github.com/jlongster/prettier) instead of ESLint style rules.
-
 ## Debugging in the Editor
 
 **This feature is currently only supported by [Visual Studio Code](https://code.visualstudio.com) and [WebStorm](https://www.jetbrains.com/webstorm/).**
@@ -289,18 +123,6 @@ Then add the block below to your `launch.json` file and put it inside the `.vsco
 Start your app by running `npm start`, and start debugging in VS Code by pressing `F5` or by clicking the green debug icon. You can now write code, set breakpoints, make changes to the code, and debug your newly modified code—all from your editor.
 
 Having problems with VS Code Debugging? Please see their [troubleshooting guide](https://github.com/Microsoft/vscode-chrome-debug/blob/master/README.md#troubleshooting).
-
-### WebStorm
-
-You would need to have [WebStorm](https://www.jetbrains.com/webstorm/) and [JetBrains IDE Support](https://chrome.google.com/webstore/detail/jetbrains-ide-support/hmhgeddbohgjknpmjagkdomcpobmllji) Chrome extension installed.
-
-In the WebStorm menu `Run` select `Edit Configurations...`. Then click `+` and select `JavaScript Debug`. Paste `http://localhost:3000` into the URL field and save the configuration.
-
->Note: the URL may be different if you've made adjustments via the [HOST or PORT environment variables](#advanced-configuration).
-
-Start your app by running `npm start`, then press `^D` on macOS or `F9` on Windows and Linux or click the green debug icon to start debugging in WebStorm.
-
-The same way you can debug your application in IntelliJ IDEA Ultimate, PhpStorm, PyCharm Pro, and RubyMine. 
 
 ## Formatting Code Automatically
 
@@ -351,16 +173,6 @@ Next we add a 'lint-staged' field to the `package.json`, for example:
 Now, whenever you make a commit, Prettier will format the changed files automatically. You can also run `./node_modules/.bin/prettier --single-quote --write "src/**/*.{js,jsx,json,css}"` to format your entire project for the first time.
 
 Next you might want to integrate Prettier in your favorite editor. Read the section on [Editor Integration](https://prettier.io/docs/en/editors.html) on the Prettier GitHub page.
-
-## Changing the Page `<title>`
-
-You can find the source HTML file in the `public` folder of the generated project. You may edit the `<title>` tag in it to change the title from “React App” to anything else.
-
-Note that normally you wouldn’t edit files in the `public` folder very often. For example, [adding a stylesheet](#adding-a-stylesheet) is done without touching the HTML.
-
-If you need to dynamically update the page title based on the content, you can use the browser [`document.title`](https://developer.mozilla.org/en-US/docs/Web/API/Document/title) API. For more complex scenarios when you want to change the title from React components, you can use [React Helmet](https://github.com/nfl/react-helmet), a third party library.
-
-If you use a custom server for your app in production and want to modify the title before it gets sent to the browser, you can follow advice in [this section](#generating-dynamic-meta-tags-on-the-server). Alternatively, you can pre-build each page as a static HTML file which then loads the JavaScript bundle, which is covered [here](#pre-rendering-into-static-html-files).
 
 ## Installing a Dependency
 
@@ -473,12 +285,6 @@ export default App;
 This will make `moduleA.js` and all its unique dependencies as a separate chunk that only loads after the user clicks the 'Load' button.
 
 You can also use it with `async` / `await` syntax if you prefer it.
-
-### With React Router
-
-If you are using React Router check out [this tutorial](http://serverless-stack.com/chapters/code-splitting-in-create-react-app.html) on how to use code splitting with it. You can find the companion GitHub repository [here](https://github.com/AnomalyInnovations/serverless-stack-demo-client/tree/code-splitting-in-create-react-app).
-
-Also check out the [Code Splitting](https://reactjs.org/docs/code-splitting.html) section in React documentation.
 
 ## Adding a Stylesheet
 
@@ -1027,20 +833,6 @@ This project also includes a [Promise polyfill](https://github.com/then/promise)
 
 You can learn more about making AJAX requests from React components in [the FAQ entry on the React website](https://reactjs.org/docs/faq-ajax.html).
 
-## Integrating with an API Backend
-
-These tutorials will help you to integrate your app with an API backend running on another port,
-using `fetch()` to access it.
-
-### Node
-Check out [this tutorial](https://www.fullstackreact.com/articles/using-create-react-app-with-a-server/).
-You can find the companion GitHub repository [here](https://github.com/fullstackreact/food-lookup-demo).
-
-### Ruby on Rails
-
-Check out [this tutorial](https://www.fullstackreact.com/articles/how-to-get-create-react-app-to-work-with-your-rails-api/).
-You can find the companion GitHub repository [here](https://github.com/fullstackreact/food-lookup-demo-rails).
-
 ## Proxying API Requests in Development
 
 >Note: this feature is available with `react-scripts@0.2.3` and higher.
@@ -1078,32 +870,6 @@ If the `proxy` option is **not** flexible enough for you, alternatively you can:
 * [Configure the proxy yourself](#configuring-the-proxy-manually)
 * Enable CORS on your server ([here’s how to do it for Express](http://enable-cors.org/server_expressjs.html)).
 * Use [environment variables](#adding-custom-environment-variables) to inject the right server host and port into your app.
-
-### "Invalid Host Header" Errors After Configuring Proxy
-
-When you enable the `proxy` option, you opt into a more strict set of host checks. This is necessary because leaving the backend open to remote hosts makes your computer vulnerable to DNS rebinding attacks. The issue is explained in [this article](https://medium.com/webpack/webpack-dev-server-middleware-security-issues-1489d950874a) and [this issue](https://github.com/webpack/webpack-dev-server/issues/887).
-
-This shouldn’t affect you when developing on `localhost`, but if you develop remotely like [described here](https://github.com/facebookincubator/create-react-app/issues/2271), you will see this error in the browser after enabling the `proxy` option:
-
->Invalid Host header
-
-To work around it, you can specify your public development host in a file called `.env.development` in the root of your project:
-
-```
-HOST=mypublicdevhost.com
-```
-
-If you restart the development server now and load the app from the specified host, it should work.
-
-If you are still having issues or if you’re using a more exotic environment like a cloud editor, you can bypass the host check completely by adding a line to `.env.development.local`. **Note that this is dangerous and exposes your machine to remote code execution from malicious websites:**
-
-```
-# NOTE: THIS IS DANGEROUS!
-# It exposes your machine to attacks from the websites you visit.
-DANGEROUSLY_DISABLE_HOST_CHECK=true
-```
-
-We don’t recommend this approach.
 
 ### Configuring the Proxy Manually
 
@@ -1156,36 +922,6 @@ Matches are regular expressions, so that you can use a regexp to match multiple 
     // Matches /baz/abc.html and /baz/sub/def.html
     "/baz/.*/.*[.]html": {
       "target": "<url_4>"
-      // ...
-    }
-  }
-  // ...
-}
-```
-
-### Configuring a WebSocket Proxy
-
-When setting up a WebSocket proxy, there are a some extra considerations to be aware of.
-
-If you’re using a WebSocket engine like [Socket.io](https://socket.io/), you must have a Socket.io server running that you can use as the proxy target. Socket.io will not work with a standard WebSocket server. Specifically, don't expect Socket.io to work with [the websocket.org echo test](http://websocket.org/echo.html).
-
-There’s some good documentation available for [setting up a Socket.io server](https://socket.io/docs/).
-
-Standard WebSockets **will** work with a standard WebSocket server as well as the websocket.org echo test. You can use libraries like [ws](https://github.com/websockets/ws) for the server, with [native WebSockets in the browser](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket).
-
-Either way, you can proxy WebSocket requests manually in `package.json`:
-
-```js
-{
-  // ...
-  "proxy": {
-    "/socket": {
-      // Your compatible WebSocket server
-      "target": "ws://<socket_url>",
-      // Tell http-proxy-middleware that this is a WebSocket proxy.
-      // Also allows you to proxy WebSocket requests without an additional HTTP request
-      // https://github.com/chimurai/http-proxy-middleware#external-websocket-upgrade
-      "ws": true
       // ...
     }
   }
@@ -1524,68 +1260,6 @@ By default `npm test` runs the watcher with interactive CLI. However, you can fo
 When creating a build of your application with `npm run build` linter warnings are not checked by default. Like `npm test`, you can force the build to perform a linter warning check by setting the environment variable `CI`. If any warnings are encountered then the build fails.
 
 Popular CI servers already set the environment variable `CI` by default but you can do this yourself too:
-
-### On CI servers
-#### Travis CI
-
-1. Following the [Travis Getting started](https://docs.travis-ci.com/user/getting-started/) guide for syncing your GitHub repository with Travis.  You may need to initialize some settings manually in your [profile](https://travis-ci.org/profile) page.
-1. Add a `.travis.yml` file to your git repository.
-```
-language: node_js
-node_js:
-  - 6
-cache:
-  directories:
-    - node_modules
-script:
-  - npm run build
-  - npm test
-```
-1. Trigger your first build with a git push.
-1. [Customize your Travis CI Build](https://docs.travis-ci.com/user/customizing-the-build/) if needed.
-
-#### CircleCI
-
-Follow [this article](https://medium.com/@knowbody/circleci-and-zeits-now-sh-c9b7eebcd3c1) to set up CircleCI with a Create React App project.
-
-### On your own environment
-##### Windows (cmd.exe)
-
-```cmd
-set CI=true&&npm test
-```
-
-```cmd
-set CI=true&&npm run build
-```
-
-(Note: the lack of whitespace is intentional.)
-
-##### Windows (Powershell)
-
-```Powershell
-($env:CI = $true) -and (npm test)
-```
-
-```Powershell
-($env:CI = $true) -and (npm run build)
-```
-
-##### Linux, macOS (Bash)
-
-```bash
-CI=true npm test
-```
-
-```bash
-CI=true npm run build
-```
-
-The test command will force Jest to run tests once instead of launching the watcher.
-
->  If you find yourself doing this often in development, please [file an issue](https://github.com/facebookincubator/create-react-app/issues/new) to tell us about your use case because we want to make watcher the best experience and are open to changing how it works to accommodate more workflows.
-
-The build command will check for linter warnings and fail if any are found.
 
 ### Disabling jsdom
 
