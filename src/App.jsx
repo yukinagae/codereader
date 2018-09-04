@@ -16,18 +16,56 @@ class Node extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { isToggleOn: false };
+        this.state = {
+            expanded: false,
+            enumerated: false
+        };
     }
 
     _onClick() {
-        this.props.onClickNode(this.props);
+
+        if (this.props.entry.type === 'file') {
+            this.props.onClickNode(this.props);
+        } else {
+            if (this.state.enumerated) {
+                this.setState({ expanded: !this.state.expanded });
+            } else {
+                this.setState({ enumerated: true });
+                const component = this;
+                if (component.props.entry.content.length > 0) {
+                    component.setState({
+                        subFolders: component.props.entry.content,
+                        expanded: !component.state.expanded
+                    });
+                }
+            }
+        }
     }
 
     render() {
+
+        let subFolders = null;
+
+        if (this.state.subFolders) {
+            subFolders = this.state.subFolders.map((entry, index) => {
+                return (
+                    <Node key={index} entry={entry} onClickNode={this.props.onClickNode} />
+                );
+            });
+        }
+
+        const style = this.state.expanded ? {} : {display: 'none'};
+
+
         return (
-            <li onClick={this._onClick.bind(this)}>
-                {this.props.entry.name}
-            </li>
+            <div>
+                <li onClick={this._onClick.bind(this)}>
+                    {this.props.entry.name}
+                </li>
+                <ul style={style}>
+                    {subFolders}
+                </ul>
+            </div>
         );
     }
 }
@@ -41,11 +79,11 @@ class Tree extends Component {
 
 
    render() {
-       const listItems = this.props.tree.map((entry) =>
-           <Node key={entry.id} entry={entry} onClickNode={this._onClickNode.bind(this)} />
+       const entries = this.props.tree.map((entry, index) =>
+           <Node key={index} entry={entry} onClickNode={this._onClickNode.bind(this)} />
        );
        return (
-           <ul>{listItems}</ul>
+           <ul>{entries}</ul>
        );
     }
 }
