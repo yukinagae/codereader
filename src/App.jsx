@@ -29,6 +29,8 @@ class Node extends Component {
         if (this.props.entry.type === 'file') {
             this.props.onClickNode(this.props);
         } else {
+            console.log("dir clicked");
+            console.log(this.props.entry.name);
             if (this.state.enumerated) {
                 this.setState({ expanded: !this.state.expanded });
             } else {
@@ -37,6 +39,10 @@ class Node extends Component {
                 if (component.props.entry.content.length > 0) {
                     component.setState({
                         subFolders: component.props.entry.content,
+                        expanded: !component.state.expanded
+                    });
+                } else {
+                    component.setState({
                         expanded: !component.state.expanded
                     });
                 }
@@ -56,7 +62,7 @@ class Node extends Component {
             });
         }
 
-        const style = this.state.expanded ? {} : {display: 'none'};
+        const style = this.state.expanded ? {} : { display: 'none' };
         let icon = this.props.entry.type === 'directory' ? faFolder : faFile;
         if (this.props.entry.type === 'directory') {
             if (this.state.expanded) {
