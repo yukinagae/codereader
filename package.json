@@ -1,5 +1,11 @@
 {
   "name": "codereader",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yukinagae/codereader.git"
+  },
+  "author": "yukinagae",
+  "email": "yuki.nagae1130@gmail.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
