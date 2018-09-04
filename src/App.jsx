@@ -12,12 +12,33 @@ const tree = [{id: "1", type: 'file', name: 'foo.txt', content: "This is foo.txt
 ];
 
 
-class Tree extends Component {
+class Node extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {isToggleOn: false};
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        console.log(this.props.entry.name);
+    }
+
     render() {
-        const listItems = this.props.tree.map((entry) =>
-            <li key={entry.id}>
-                {entry.name}
+        return (
+            <li onClick={this.handleClick}>
+                {this.props.entry.name}
             </li>
+        );
+    }
+}
+
+
+class Tree extends Component {
+
+   render() {
+        const listItems = this.props.tree.map((entry) =>
+            <Node key={entry.id} entry={entry} />
         );
         return (
             <ul>{listItems}</ul>
@@ -27,17 +48,24 @@ class Tree extends Component {
 
 
 class Page extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = null;
+    }
+
     render() {
-        return (
-            <div>
-                {this.props.file.content}
-            </div>
-        );
+        if (this.state && this.state.file != null) {
+            return (<div>{this.state.file.content}</div>);
+        } else {
+            return (<div>empty!</div>);
+        }
     }
 }
 
 
 class App extends Component {
+
     render() {
         console.log(tree);
         return (
@@ -47,7 +75,7 @@ class App extends Component {
                     <Tree tree={tree} />
                 </aside>
                 <div className="column is-10 code hero is-fullheight">
-                    <Page file={tree[0]} />
+                    <Page />
                 </div>
             </div>
 
