@@ -1,9 +1,21 @@
 .aside {
     background-color: #252f3c;
     color: white;
-    text-align: center;
+    text-align: left;
 }
 
 .code {
     color: black;
+}
+
+.node {
+    margin-left: 20px;
+}
+
+.tree-header {
+    height: 50px;
+}
+
+.page-header {
+    height: 50px;
 }

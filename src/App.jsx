@@ -65,14 +65,16 @@ class Node extends Component {
         }
 
         return (
-            <div>
-                <li onClick={this._onClick.bind(this)}>
+            <div className="node">
+                <div onClick={this._onClick.bind(this)}>
                     <FontAwesomeIcon icon={icon} />
-                    {this.props.entry.name}
-                </li>
-                <ul style={style}>
-                    {subFolders}
-                </ul>
+                    <span>
+                        &nbsp;{this.props.entry.name}
+                    </span>
+                    <ul style={style}>
+                        {subFolders}
+                    </ul>
+                </div>
             </div>
         );
     }
@@ -100,7 +102,9 @@ class Tree extends Component {
 class Page extends Component {
 
     render() {
-        return (<div>{this.props.content}</div>);
+        return (
+            <div>{this.props.content}</div>
+        );
     }
 }
 
