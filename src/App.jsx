@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import 'bulma/css/bulma.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFile, faFolder, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
 
 
 const tree = [{id: "1", type: 'file', name: 'foo.txt', content: "This is foo.txt"},
@@ -55,11 +57,17 @@ class Node extends Component {
         }
 
         const style = this.state.expanded ? {} : {display: 'none'};
-
+        let icon = this.props.entry.type === 'directory' ? faFolder : faFile;
+        if (this.props.entry.type === 'directory') {
+            if (this.state.expanded) {
+                icon = faFolderOpen;
+            }
+        }
 
         return (
             <div>
                 <li onClick={this._onClick.bind(this)}>
+                    <FontAwesomeIcon icon={icon} />
                     {this.props.entry.name}
                 </li>
                 <ul style={style}>
