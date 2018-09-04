@@ -61,13 +61,8 @@ class Tree extends Component {
 
 class Page extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {content: "empty"}
-    }
-
     render() {
-        return (<div>{this.state.content}</div>);
+        return (<div>{this.props.content}</div>);
     }
 }
 
