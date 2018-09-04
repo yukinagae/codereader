@@ -17,16 +17,17 @@ class Node extends Component {
     constructor(props) {
         super(props);
         this.state = {isToggleOn: false};
-        this.handleClick = this.handleClick.bind(this);
+
+        this.selectNode = this.selectNode.bind(this);
     }
 
-    handleClick() {
-        console.log(this.props.entry.name);
+    selectNode() {
+        this.props.selectNode(this.props);
     }
 
     render() {
         return (
-            <li onClick={this.handleClick}>
+            <li onClick={this.selectNode}>
                 {this.props.entry.name}
             </li>
         );
@@ -36,13 +37,24 @@ class Node extends Component {
 
 class Tree extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.selectNode = this.selectNode.bind(this);
+    }
+
+    selectNode(props) {
+        this.props.selectNode(props);
+    }
+
+
    render() {
-        const listItems = this.props.tree.map((entry) =>
-            <Node key={entry.id} entry={entry} />
-        );
-        return (
-            <ul>{listItems}</ul>
-        );
+       const listItems = this.props.tree.map((entry) =>
+           <Node key={entry.id} entry={entry} selectNode={this.selectNode.bind(this)} />
+       );
+       return (
+           <ul>{listItems}</ul>
+       );
     }
 }
 
@@ -51,37 +63,46 @@ class Page extends Component {
 
     constructor(props) {
         super(props);
-        this.state = null;
+        this.state = {content: "empty"}
     }
 
     render() {
-        if (this.state && this.state.file != null) {
-            return (<div>{this.state.file.content}</div>);
-        } else {
-            return (<div>empty!</div>);
-        }
+        return (<div>{this.state.content}</div>);
     }
 }
 
 
 class App extends Component {
 
-    render() {
-        console.log(tree);
-        return (
-        <div className="App">
-            <div className="columns">
-                <aside className="column is-2 aside hero is-fullheight">
-                    <Tree tree={tree} />
-                </aside>
-                <div className="column is-10 code hero is-fullheight">
-                    <Page />
-                </div>
-            </div>
+    constructor(props) {
+        super(props);
+        this.state = {
+            tree: tree,
+            content: "console.log('Aloha world!');"
+        }
 
-        </div>
-    );
-  }
+        this.selectNode = this.selectNode.bind(this);
+    }
+
+    selectNode(props) {
+        this.setState({content: props.entry.content});
+    }
+
+    render() {
+        return (
+            <div className="App">
+                <div className="columns">
+                    <aside className="column is-2 aside hero is-fullheight">
+                        <Tree tree={this.state.tree} selectNode={this.selectNode.bind(this)}/>
+                    </aside>
+                    <div className="column is-10 code hero is-fullheight">
+                        <Page content={this.state.content} />
+                    </div>
+                </div>
+
+            </div>
+        );
+    }
 }
 
 export default App;
