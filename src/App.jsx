@@ -13,16 +13,8 @@ const tree = [{id: "1", type: 'file', name: 'foo.txt', content: "This is foo.txt
 
 
 class Tree extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            value: null,
-        };
-    }
-
     render() {
-        const listItems = this.props.value.map((entry) =>
+        const listItems = this.props.tree.map((entry) =>
             <li key={entry.id}>
                 {entry.name}
             </li>
@@ -35,19 +27,10 @@ class Tree extends Component {
 
 
 class Page extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            value: null,
-        };
-    }
-
     render() {
-        console.log(this.props.value);
         return (
             <div>
-                {this.props.value.content}
+                {this.props.file.content}
             </div>
         );
     }
@@ -61,10 +44,10 @@ class App extends Component {
         <div className="App">
             <div className="columns">
                 <aside className="column is-2 aside hero is-fullheight">
-                    <Tree value={tree} />
+                    <Tree tree={tree} />
                 </aside>
                 <div className="column is-10 code hero is-fullheight">
-                    <Page value={tree[0]} />
+                    <Page file={tree[0]} />
                 </div>
             </div>
 
