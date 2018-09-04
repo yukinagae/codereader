@@ -16,18 +16,16 @@ class Node extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {isToggleOn: false};
-
-        this.selectNode = this.selectNode.bind(this);
+        this.state = { isToggleOn: false };
     }
 
-    selectNode() {
-        this.props.selectNode(this.props);
+    _onClick() {
+        this.props.onClickNode(this.props);
     }
 
     render() {
         return (
-            <li onClick={this.selectNode}>
+            <li onClick={this._onClick.bind(this)}>
                 {this.props.entry.name}
             </li>
         );
@@ -37,20 +35,14 @@ class Node extends Component {
 
 class Tree extends Component {
 
-    constructor(props) {
-        super(props);
-
-        this.selectNode = this.selectNode.bind(this);
-    }
-
-    selectNode(props) {
-        this.props.selectNode(props);
+    _onClickNode(props) {
+        this.props.onClickNode(props);
     }
 
 
    render() {
        const listItems = this.props.tree.map((entry) =>
-           <Node key={entry.id} entry={entry} selectNode={this.selectNode.bind(this)} />
+           <Node key={entry.id} entry={entry} onClickNode={this._onClickNode.bind(this)} />
        );
        return (
            <ul>{listItems}</ul>
@@ -75,11 +67,9 @@ class App extends Component {
             tree: tree,
             content: "console.log('Aloha world!');"
         }
-
-        this.selectNode = this.selectNode.bind(this);
     }
 
-    selectNode(props) {
+    _onClickNode(props) {
         this.setState({content: props.entry.content});
     }
 
@@ -88,7 +78,7 @@ class App extends Component {
             <div className="App">
                 <div className="columns">
                     <aside className="column is-2 aside hero is-fullheight">
-                        <Tree tree={this.state.tree} selectNode={this.selectNode.bind(this)}/>
+                        <Tree tree={this.state.tree} onClickNode={this._onClickNode.bind(this)}/>
                     </aside>
                     <div className="column is-10 code hero is-fullheight">
                         <Page content={this.state.content} />
