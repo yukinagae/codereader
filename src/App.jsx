@@ -38,38 +38,21 @@ class Dir extends Component {
         super(props);
         this.state = {
             expanded: false,
-            enumerated: false
         };
     }
 
     _onClick() {
-
         console.log("dir clicked");
         console.log(this.props.entry.name);
-        if (this.state.enumerated) {
-            this.setState({ expanded: !this.state.expanded });
-        } else {
-            this.setState({ enumerated: true });
-            const component = this;
-            if (component.props.entry.content.length > 0) {
-                component.setState({
-                    subFolders: component.props.entry.content,
-                    expanded: !component.state.expanded
-                });
-            } else {
-                component.setState({
-                    expanded: !component.state.expanded
-                });
-           }
-        }
+        this.setState({ expanded: !this.state.expanded });
     }
 
     render() {
 
-        let subFolders = [];
+        let entries = [];
 
-        if (this.state.subFolders) {
-            subFolders = this.state.subFolders.map((entry, index) => {
+        if (this.state.expanded) {
+            entries = this.props.entry.content.map((entry, index) => {
                 if (entry.type === 'file') {
                     return <File key={index} entry={entry} onClickNode={this.props.onClickNode} />
                 } else {
@@ -77,7 +60,7 @@ class Dir extends Component {
                 }
             });
         }
-        
+
         const style = this.state.expanded ? {} : { display: 'none' };
         let icon = faFolder
         if (this.props.entry.type === 'directory') {
@@ -86,16 +69,13 @@ class Dir extends Component {
             }
         }
 
-
         return (
             <div className="node">
                 <div onClick={this._onClick.bind(this)}>
                     <FontAwesomeIcon icon={icon} />
-                    <span>
-            &nbsp;{this.props.entry.name}
-                    </span>
+                    <span>&nbsp;{this.props.entry.name}</span>
                     <ul style={style}>
-                        {subFolders}
+                        {entries}
                     </ul>
                 </div>
             </div>
