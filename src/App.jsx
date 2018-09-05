@@ -41,9 +41,11 @@ class Dir extends Component {
         };
     }
 
-    _onClick() {
+    _onClick(e) {
+        console.log(e);
         console.log("dir clicked");
         console.log(this.props.entry.name);
+        e.stopPropagation();
         this.setState({ expanded: !this.state.expanded });
     }
 
@@ -51,23 +53,23 @@ class Dir extends Component {
 
         let entries = [];
 
+        console.log(this);
+        console.log(this.state);
+
         if (this.state.expanded) {
             entries = this.props.entry.content.map((entry, index) => {
+                console.log(this);
+                console.log(entry);
                 if (entry.type === 'file') {
-                    return <File key={index} entry={entry} onClickNode={this.props.onClickNode} />
+                    return <File key={index} entry={entry} onClickNode="console.log('file');" />
                 } else {
-                    return <Dir key={index} entry={entry} onClickNode={this.props.onClickNode} />
+                    return <Dir key={index} entry={entry} />
                 }
             });
         }
 
+        const icon = this.state.expanded ? faFolderOpen : faFolder;
         const style = this.state.expanded ? {} : { display: 'none' };
-        let icon = faFolder
-        if (this.props.entry.type === 'directory') {
-            if (this.state.expanded) {
-                icon = faFolderOpen;
-            }
-        }
 
         return (
             <div className="node">
@@ -96,7 +98,7 @@ class Tree extends Component {
                if (entry.type === 'file') {
                    return <File key={index} entry={entry} onClickNode={this._onClickNode.bind(this)} />
                } else {
-                   return <Dir key={index} entry={entry} onClickNode={this._onClickNode.bind(this)} />
+                   return <Dir key={index} entry={entry} />
                }
            }
        );
