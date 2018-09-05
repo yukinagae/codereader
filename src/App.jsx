@@ -1,112 +1,107 @@
 import React, { Component } from 'react';
 import './App.css';
 import 'bulma/css/bulma.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFile, faFolder, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
+import { Classes, Icon, ITreeNode, Tooltip, Tree } from "@blueprintjs/core";
 
 
-const tree = [{id: "1", type: 'file', name: 'foo.txt', content: "This is foo.txt"},
-              {id: "2", type: 'file', name: 'bar.txt', content: "This is bar.txt"},
-              {id: "3", type: 'directory', name: 'dir1', content: [
-                  {id: "4", type: 'file', name: 'homu.txt', content: "This is homu.txt"},
-                  {id: "5", type: 'directory', name: 'dir2', content: []}
-              ]}
-];
-
-
-class File extends Component {
-
-    _onClick() {
-        this.props.onClickNode(this.props);
-    }
+class TreeExample extends Component {
+    state = { nodes: INITIAL_STATE };
 
     render() {
         return (
-            <div className="node">
-                <div onClick={this._onClick.bind(this)}>
-                    <FontAwesomeIcon icon={faFile} />
-                    <span>&nbsp;{this.props.entry.name}</span>
-                </div>
-            </div>
+                <Tree
+                    contents={this.state.nodes}
+                    onNodeClick={this.handleNodeClick}
+                    onNodeCollapse={this.handleNodeCollapse}
+                    onNodeExpand={this.handleNodeExpand}
+                    className={Classes.ELEVATION_0}
+                />
         );
     }
-}
 
-class Dir extends Component {
+    handleNodeClick = (nodeData, _nodePath, e) => {
+        const originallySelected = nodeData.isSelected;
+        if (!e.shiftKey) {
+            this.forEachNode(this.state.nodes, n => (n.isSelected = false));
+        }
+        nodeData.isSelected = originallySelected == null ? true : !originallySelected;
+        this.setState(this.state);
+    };
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            expanded: false,
-        };
-    }
+    handleNodeCollapse = (nodeData) => {
+        nodeData.isExpanded = false;
+        this.setState(this.state);
+    };
 
-    _onClick(e) {
-        console.log(e);
-        console.log("dir clicked");
-        console.log(this.props.entry.name);
-        e.stopPropagation();
-        this.setState({ expanded: !this.state.expanded });
-    }
+    handleNodeExpand = (nodeData) => {
+        nodeData.isExpanded = true;
+        this.setState(this.state);
+    };
 
-    render() {
-
-        let entries = [];
-
-        console.log(this);
-        console.log(this.state);
-
-        if (this.state.expanded) {
-            entries = this.props.entry.content.map((entry, index) => {
-                console.log(this);
-                console.log(entry);
-                if (entry.type === 'file') {
-                    return <File key={index} entry={entry} onClickNode="console.log('file');" />
-                } else {
-                    return <Dir key={index} entry={entry} />
-                }
-            });
+    forEachNode(nodes, callback) {
+        if (nodes == null) {
+            return;
         }
 
-        const icon = this.state.expanded ? faFolderOpen : faFolder;
-        const style = this.state.expanded ? {} : { display: 'none' };
-
-        return (
-            <div className="node">
-                <div onClick={this._onClick.bind(this)}>
-                    <FontAwesomeIcon icon={icon} />
-                    <span>&nbsp;{this.props.entry.name}</span>
-                    <ul style={style}>
-                        {entries}
-                    </ul>
-                </div>
-            </div>
-        );
+        for (const node of nodes) {
+            callback(node);
+            this.forEachNode(node.childNodes, callback);
+        }
     }
 }
 
-
-class Tree extends Component {
-
-    _onClickNode(props) {
-        this.props.onClickNode(props);
-    }
-
-
-   render() {
-       const entries = this.props.tree.map((entry, index) => {
-               if (entry.type === 'file') {
-                   return <File key={index} entry={entry} onClickNode={this._onClickNode.bind(this)} />
-               } else {
-                   return <Dir key={index} entry={entry} />
-               }
-           }
-       );
-       return (
-           <ul>{entries}</ul>
-       );
-    }
-}
+/* tslint:disable:object-literal-sort-keys so childNodes can come last */
+const INITIAL_STATE = [
+    {
+        id: 0,
+        hasCaret: true,
+        icon: "folder-close",
+        label: "Folder 0",
+    },
+    {
+        id: 1,
+        icon: "folder-close",
+        isExpanded: true,
+        label: <Tooltip content="I'm a folder <3">Folder 1</Tooltip>,
+        childNodes: [
+            {
+                id: 2,
+                icon: "document",
+                label: "Item 0",
+                secondaryLabel: (
+                    <Tooltip content="An eye!">
+                        <Icon icon="eye-open" />
+                    </Tooltip>
+                ),
+            },
+            {
+                id: 3,
+                icon: "tag",
+                label: "Organic meditation gluten-free, sriracha VHS drinking vinegar beard man.",
+            },
+            {
+                id: 4,
+                hasCaret: true,
+                icon: "folder-close",
+                label: <Tooltip content="foo">Folder 2</Tooltip>,
+                childNodes: [
+                    { id: 5, label: "No-Icon Item" },
+                    { id: 6, icon: "tag", label: "Item 1" },
+                    {
+                        id: 7,
+                        hasCaret: true,
+                        icon: "folder-close",
+                        label: "Folder 3",
+                        childNodes: [
+                            { id: 8, icon: "document", label: "Item 0" },
+                            { id: 9, icon: "tag", label: "Item 1" },
+                        ],
+                    },
+                ],
+            },
+        ],
+    },
+];
 
 
 class Page extends Component {
@@ -124,13 +119,8 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tree: tree,
             content: "console.log('Aloha world!');"
         }
-    }
-
-    _onClickNode(props) {
-        this.setState({content: props.entry.content});
     }
 
     render() {
@@ -138,7 +128,7 @@ class App extends Component {
             <div className="App">
                 <div className="columns">
                     <aside className="column is-2 aside hero is-fullheight">
-                        <Tree tree={this.state.tree} onClickNode={this._onClickNode.bind(this)}/>
+                        <TreeExample />
                     </aside>
                     <div className="column is-10 code hero is-fullheight">
                         <Page content={this.state.content} />
