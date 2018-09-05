@@ -14,7 +14,25 @@ const tree = [{id: "1", type: 'file', name: 'foo.txt', content: "This is foo.txt
 ];
 
 
-class Node extends Component {
+class File extends Component {
+
+    _onClick() {
+        this.props.onClickNode(this.props);
+    }
+
+    render() {
+        return (
+            <div className="node">
+                <div onClick={this._onClick.bind(this)}>
+                    <FontAwesomeIcon icon={faFile} />
+                    <span>&nbsp;{this.props.entry.name}</span>
+                </div>
+            </div>
+        );
+    }
+}
+
+class Dir extends Component {
 
     constructor(props) {
         super(props);
@@ -26,56 +44,55 @@ class Node extends Component {
 
     _onClick() {
 
-        if (this.props.entry.type === 'file') {
-            this.props.onClickNode(this.props);
+        console.log("dir clicked");
+        console.log(this.props.entry.name);
+        if (this.state.enumerated) {
+            this.setState({ expanded: !this.state.expanded });
         } else {
-            console.log("dir clicked");
-            console.log(this.props.entry.name);
-            if (this.state.enumerated) {
-                this.setState({ expanded: !this.state.expanded });
+            this.setState({ enumerated: true });
+            const component = this;
+            if (component.props.entry.content.length > 0) {
+                component.setState({
+                    subFolders: component.props.entry.content,
+                    expanded: !component.state.expanded
+                });
             } else {
-                this.setState({ enumerated: true });
-                const component = this;
-                if (component.props.entry.content.length > 0) {
-                    component.setState({
-                        subFolders: component.props.entry.content,
-                        expanded: !component.state.expanded
-                    });
-                } else {
-                    component.setState({
-                        expanded: !component.state.expanded
-                    });
-                }
-            }
+                component.setState({
+                    expanded: !component.state.expanded
+                });
+           }
         }
     }
 
     render() {
 
-        let subFolders = null;
+        let subFolders = [];
 
         if (this.state.subFolders) {
             subFolders = this.state.subFolders.map((entry, index) => {
-                return (
-                    <Node key={index} entry={entry} onClickNode={this.props.onClickNode} />
-                );
+                if (entry.type === 'file') {
+                    return <File key={index} entry={entry} onClickNode={this.props.onClickNode} />
+                } else {
+                    return <Dir key={index} entry={entry} onClickNode={this.props.onClickNode} />
+                }
             });
         }
-
+        
         const style = this.state.expanded ? {} : { display: 'none' };
-        let icon = this.props.entry.type === 'directory' ? faFolder : faFile;
+        let icon = faFolder
         if (this.props.entry.type === 'directory') {
             if (this.state.expanded) {
                 icon = faFolderOpen;
             }
         }
 
+
         return (
             <div className="node">
                 <div onClick={this._onClick.bind(this)}>
                     <FontAwesomeIcon icon={icon} />
                     <span>
-                        &nbsp;{this.props.entry.name}
+            &nbsp;{this.props.entry.name}
                     </span>
                     <ul style={style}>
                         {subFolders}
@@ -95,8 +112,13 @@ class Tree extends Component {
 
 
    render() {
-       const entries = this.props.tree.map((entry, index) =>
-           <Node key={index} entry={entry} onClickNode={this._onClickNode.bind(this)} />
+       const entries = this.props.tree.map((entry, index) => {
+               if (entry.type === 'file') {
+                   return <File key={index} entry={entry} onClickNode={this._onClickNode.bind(this)} />
+               } else {
+                   return <Dir key={index} entry={entry} onClickNode={this._onClickNode.bind(this)} />
+               }
+           }
        );
        return (
            <ul>{entries}</ul>
