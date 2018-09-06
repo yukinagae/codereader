@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
 import 'bulma/css/bulma.css'
-import { Classes, Icon, ITreeNode, Tooltip, Tree } from "@blueprintjs/core";
+import { Classes, Tree } from "@blueprintjs/core";
 
 
 class TreeExample extends Component {
-    state = { nodes: INITIAL_STATE };
+    state = { nodes: INITIAL_TREE };
 
     render() {
         return (
@@ -20,6 +20,7 @@ class TreeExample extends Component {
     }
 
     handleNodeClick = (nodeData, _nodePath, e) => {
+        console.log(nodeData);
         const originallySelected = nodeData.isSelected;
         if (!e.shiftKey) {
             this.forEachNode(this.state.nodes, n => (n.isSelected = false));
@@ -50,52 +51,27 @@ class TreeExample extends Component {
     }
 }
 
-/* tslint:disable:object-literal-sort-keys so childNodes can come last */
-const INITIAL_STATE = [
-    {
-        id: 0,
-        hasCaret: true,
-        icon: "folder-close",
-        label: "Folder 0",
-    },
+const INITIAL_TREE = [
     {
         id: 1,
         icon: "folder-close",
         isExpanded: true,
-        label: <Tooltip content="I'm a folder <3">Folder 1</Tooltip>,
+        label: "Folder 1",
         childNodes: [
             {
                 id: 2,
                 icon: "document",
                 label: "Item 0",
-                secondaryLabel: (
-                    <Tooltip content="An eye!">
-                        <Icon icon="eye-open" />
-                    </Tooltip>
-                ),
             },
             {
                 id: 3,
-                icon: "tag",
-                label: "Organic meditation gluten-free, sriracha VHS drinking vinegar beard man.",
-            },
-            {
-                id: 4,
-                hasCaret: true,
                 icon: "folder-close",
-                label: <Tooltip content="foo">Folder 2</Tooltip>,
+                label: "Folder 2",
                 childNodes: [
-                    { id: 5, label: "No-Icon Item" },
-                    { id: 6, icon: "tag", label: "Item 1" },
                     {
-                        id: 7,
-                        hasCaret: true,
-                        icon: "folder-close",
-                        label: "Folder 3",
-                        childNodes: [
-                            { id: 8, icon: "document", label: "Item 0" },
-                            { id: 9, icon: "tag", label: "Item 1" },
-                        ],
+                        id: 4,
+                        icon: "document",
+                        label: "Item 1"
                     },
                 ],
             },
@@ -127,10 +103,10 @@ class App extends Component {
         return (
             <div className="App">
                 <div className="columns">
-                    <aside className="column is-2 aside hero is-fullheight">
+                    <aside className="column is-4 aside hero is-fullheight">
                         <TreeExample />
                     </aside>
-                    <div className="column is-10 code hero is-fullheight">
+                    <div className="column is-8 code hero is-fullheight">
                         <Page content={this.state.content} />
                     </div>
                 </div>
