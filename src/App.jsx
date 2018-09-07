@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import './App.css';
 import 'bulma/css/bulma.css'
 import { Classes, Tree } from "@blueprintjs/core";
+import CodeMirror from 'react-codemirror';
+
+require('codemirror/mode/javascript/javascript');
+require('codemirror/mode/markdown/markdown');
 
 
 class TreeExample extends Component {
@@ -66,7 +70,7 @@ const INITIAL_TREE = [
                 id: 2,
                 icon: "document",
                 label: "Item 0",
-                content: "This is Item 0.",
+                content: 'console.log("This is Item 0.");',
             },
             {
                 id: 3,
@@ -77,7 +81,7 @@ const INITIAL_TREE = [
                         id: 4,
                         icon: "document",
                         label: "Item 1",
-                        content: "This is Item 1.",
+                        content: 'console.log("This is Item 1.");',
                     },
                 ],
             },
@@ -85,40 +89,58 @@ const INITIAL_TREE = [
     },
 ];
 
-
-class Page extends Component {
+class Code extends Component {
 
     render() {
+        console.log(this.props.content);
         return (
-            <div>{this.props.content}</div>
-        );
+            <CodeMirror value={this.props.content} options={this.props.options} />
+        )
     }
 }
 
 
 class App extends Component {
 
+
+
     constructor(props) {
         super(props);
         this.state = {
-            content: "empty",
+            content: 'console.log("empty");\naaa\nbbb',
+            code: "# comment",
+            code_options: {
+                readOnly: true,
+                lineNumbers: true,
+                mode: 'javascript',
+		        },
+            comment_options: {
+                mode: 'markdown',
+		        }
         }
     }
 
     onClickDocument(nodeData) {
-        console.log(nodeData);
-        this.setState({ "content": nodeData.content });
+        /* console.log(nodeData); */
+        this.setState({ content: nodeData.content });
+    }
+
+    updateCode(newCode) {
+        this.setState({ code: newCode });
     }
 
     render() {
         return (
             <div className="App">
                 <div className="columns">
-                    <aside className="column is-4 aside hero is-fullheight">
+                    <aside className="column is-2 aside hero is-fullheight">
                         <TreeExample onClickDocument={this.onClickDocument.bind(this)} />
                     </aside>
-                    <div className="column is-8 code hero is-fullheight">
-                        <Page content={this.state.content} />
+                    <div className="column is-6 code hero is-fullheight">
+                        <Code content={this.state.content} options={this.state.code_options} />
+                    </div>
+                    <div className="column is-4 comment hero is-fullheight">
+                        <CodeMirror value={this.state.code} onChange={this.updateCode.bind(this)} options={this.state.comment_options} />
                     </div>
                 </div>
 

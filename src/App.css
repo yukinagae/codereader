@@ -6,6 +6,11 @@
 
 .code {
     color: black;
+    padding-left: 0px !important;
+}
+
+.comment {
+    border-left: solid 1px #999;
 }
 
 .node {
