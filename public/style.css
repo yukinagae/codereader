@@ -7,3 +7,7 @@ body {
     font-family: Fira Sans;
     font-variant-ligatures: normal;
 }
+
+.CodeMirror {
+    height: 100vh;
+}
