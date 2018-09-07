@@ -104,8 +104,14 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            content: 'console.log("empty");\nvar a = 1;\nvar b = 2;',
-            comment: "# comment",
+            content: `console.log("empty");
+var a = 1;
+var b = 2;`,
+            comment: `# comment
+
+- aa
+- bb
+- cc`,
             code_options: {
                 readOnly: true,
                 lineNumbers: true,
