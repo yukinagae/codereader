@@ -4,6 +4,8 @@ import 'bulma/css/bulma.css'
 import { Classes, Tree } from "@blueprintjs/core";
 import {Controlled as CodeMirror} from 'react-codemirror2'
 
+import dummy_tree from './sample.json';
+
 require('codemirror/mode/javascript/javascript');
 require('codemirror/mode/markdown/markdown');
 
@@ -74,40 +76,12 @@ class Code extends Component {
     }
 }
 
-const INITIAL_TREE = [
-    {
-        id: 1,
-        icon: "folder-close",
-        isExpanded: true,
-        label: "Folder 1",
-        childNodes: [
-            {
-                id: 2,
-                icon: "document",
-                label: "Item 0",
-                content: 'console.log("This is Item 0.");',
-            },
-            {
-                id: 3,
-                icon: "folder-close",
-                label: "Folder 2",
-                childNodes: [
-                    {
-                        id: 4,
-                        icon: "document",
-                        label: "Item 1",
-                        content: 'console.log("This is Item 1.");',
-                    },
-                ],
-            },
-        ],
-    },
-];
 
 class App extends Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
             content: `console.log("empty");
 var a = 1;
@@ -137,7 +111,7 @@ var b = 2;`,
             <div className="App">
                 <div className="columns">
                     <aside className="column is-2 aside hero is-fullheight">
-                        <TreeExample tree={INITIAL_TREE} onClickDocument={this.onClickDocument.bind(this)} />
+                        <TreeExample tree={dummy_tree} onClickDocument={this.onClickDocument.bind(this)} />
                     </aside>
                     <div className="column is-6 code hero is-fullheight">
                         <Code content={this.state.content} options={this.state.code_options} />

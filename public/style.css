@@ -3,7 +3,6 @@ body {
 }
 
 .CodeMirror pre {
-    font-size: 1rem !important;
     font-family: Fira Sans;
     font-variant-ligatures: normal;
 }
