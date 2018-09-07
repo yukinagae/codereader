@@ -9,7 +9,12 @@ require('codemirror/mode/markdown/markdown');
 
 
 class TreeExample extends Component {
-    state = { nodes: INITIAL_TREE };
+
+    constructor(props) {
+        super(props);
+        this.state = { nodes: this.props.tree };
+    }
+
 
     render() {
         return (
@@ -59,6 +64,16 @@ class TreeExample extends Component {
     }
 }
 
+
+class Code extends Component {
+
+    render() {
+        return (
+            <CodeMirror value={this.props.content} options={this.props.options} />
+        )
+    }
+}
+
 const INITIAL_TREE = [
     {
         id: 1,
@@ -88,16 +103,6 @@ const INITIAL_TREE = [
         ],
     },
 ];
-
-class Code extends Component {
-
-    render() {
-        return (
-            <CodeMirror value={this.props.content} options={this.props.options} />
-        )
-    }
-}
-
 
 class App extends Component {
 
@@ -132,7 +137,7 @@ var b = 2;`,
             <div className="App">
                 <div className="columns">
                     <aside className="column is-2 aside hero is-fullheight">
-                        <TreeExample onClickDocument={this.onClickDocument.bind(this)} />
+                        <TreeExample tree={INITIAL_TREE} onClickDocument={this.onClickDocument.bind(this)} />
                     </aside>
                     <div className="column is-6 code hero is-fullheight">
                         <Code content={this.state.content} options={this.state.code_options} />
