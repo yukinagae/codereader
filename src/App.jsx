@@ -20,7 +20,11 @@ class TreeExample extends Component {
     }
 
     handleNodeClick = (nodeData, _nodePath, e) => {
-        console.log(nodeData);
+
+        if (nodeData.icon === 'document') {
+            this.props.onClickDocument(nodeData);
+        }
+
         const originallySelected = nodeData.isSelected;
         if (!e.shiftKey) {
             this.forEachNode(this.state.nodes, n => (n.isSelected = false));
@@ -62,6 +66,7 @@ const INITIAL_TREE = [
                 id: 2,
                 icon: "document",
                 label: "Item 0",
+                content: "This is Item 0.",
             },
             {
                 id: 3,
@@ -71,7 +76,8 @@ const INITIAL_TREE = [
                     {
                         id: 4,
                         icon: "document",
-                        label: "Item 1"
+                        label: "Item 1",
+                        content: "This is Item 1.",
                     },
                 ],
             },
@@ -95,8 +101,13 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            content: "console.log('Aloha world!');"
+            content: "empty",
         }
+    }
+
+    onClickDocument(nodeData) {
+        console.log(nodeData);
+        this.setState({ "content": nodeData.content });
     }
 
     render() {
@@ -104,7 +115,7 @@ class App extends Component {
             <div className="App">
                 <div className="columns">
                     <aside className="column is-4 aside hero is-fullheight">
-                        <TreeExample />
+                        <TreeExample onClickDocument={this.onClickDocument.bind(this)} />
                     </aside>
                     <div className="column is-8 code hero is-fullheight">
                         <Page content={this.state.content} />
