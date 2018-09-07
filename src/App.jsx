@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import 'bulma/css/bulma.css'
 import { Classes, Tree } from "@blueprintjs/core";
-import CodeMirror from 'react-codemirror';
+import {Controlled as CodeMirror} from 'react-codemirror2'
 
 require('codemirror/mode/javascript/javascript');
 require('codemirror/mode/markdown/markdown');
@@ -92,7 +92,6 @@ const INITIAL_TREE = [
 class Code extends Component {
 
     render() {
-        console.log(this.props.content);
         return (
             <CodeMirror value={this.props.content} options={this.props.options} />
         )
@@ -102,13 +101,11 @@ class Code extends Component {
 
 class App extends Component {
 
-
-
     constructor(props) {
         super(props);
         this.state = {
-            content: 'console.log("empty");\naaa\nbbb',
-            code: "# comment",
+            content: 'console.log("empty");\nvar a = 1;\nvar b = 2;',
+            comment: "# comment",
             code_options: {
                 readOnly: true,
                 lineNumbers: true,
@@ -121,12 +118,7 @@ class App extends Component {
     }
 
     onClickDocument(nodeData) {
-        /* console.log(nodeData); */
         this.setState({ content: nodeData.content });
-    }
-
-    updateCode(newCode) {
-        this.setState({ code: newCode });
     }
 
     render() {
@@ -140,7 +132,15 @@ class App extends Component {
                         <Code content={this.state.content} options={this.state.code_options} />
                     </div>
                     <div className="column is-4 comment hero is-fullheight">
-                        <CodeMirror value={this.state.code} onChange={this.updateCode.bind(this)} options={this.state.comment_options} />
+                        <CodeMirror
+                            value={this.state.comment}
+                            onBeforeChange={(editor, data, value) => {
+                                    this.setState({comment: value});
+                            }}
+                            onChange={(editor, data, value) => {
+                            }}
+                            options={this.state.comment_options}
+                        />
                     </div>
                 </div>
 
