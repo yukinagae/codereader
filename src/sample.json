@@ -4,6 +4,7 @@
     "icon": "folder-close",
     "isExpanded": true,
     "label": "codereader",
+    "comments": [],
     "childNodes": [
       {
         "id": 2,
@@ -18,6 +19,7 @@
         "id": 3,
         "icon": "folder-close",
         "label": "src",
+        "comments": [],
         "childNodes": [
           {
             "id": 4,

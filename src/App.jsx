@@ -14,7 +14,9 @@ class TreeExample extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { nodes: this.props.tree };
+        this.state = {
+            nodes: this.props.tree
+        };
     }
 
 
@@ -32,9 +34,7 @@ class TreeExample extends Component {
 
     handleNodeClick = (nodeData, _nodePath, e) => {
 
-        if (nodeData.icon === 'document') {
-            this.props.onClickDocument(nodeData);
-        }
+        this.props.onClickNode(nodeData);
 
         const originallySelected = nodeData.isSelected;
         if (!e.shiftKey) {
@@ -82,20 +82,17 @@ class Comment extends Component {
         super(props);
 
         this.state = {
-            nodeId: this.props.nodeId,
             comment: this.props.comment,
+        };
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.nodeId !== this.props.nodeId) {
+            this.setState({ comment: this.props.comment });
         }
     }
 
-    editComment(value) {
-        console.log("[edit]");
-        this.setState({comment: value});
-        this.props.editComment(this.state.nodeId, value);
-    }
-
     render() {
-        console.log("[render] comment");
-        console.log(this.state);
         return (
             <CodeMirror
                 value={this.state.comment}
@@ -104,7 +101,6 @@ class Comment extends Component {
                 }}
                 onChange={(editor, data, value) => {
                     console.log(value);
-                        this.editComment(value);
                 }}
                 options={this.props.options}
             />
@@ -119,15 +115,13 @@ class App extends Component {
         super(props);
 
         this.state = {
+            // base tree
             tree: dummy_tree,
+            // each node
             nodeId: 1,
-            content: `console.log("empty");
-var a = 1;
-var b = 2;`,
-            comment: `# comment
-
-- a
-- b`,
+            content: '',
+            comment: '',
+            // option
             code_options: {
                 readOnly: true,
                 lineNumbers: true,
@@ -136,21 +130,15 @@ var b = 2;`,
             comment_options: {
                 mode: 'markdown',
 		        }
-        }
+        };
     }
 
-    onClickDocument(nodeData) {
+    onClickNode(nodeData) {
+        // code
         this.setState({ content: nodeData.content });
+        // comment
         this.setState({ nodeId: nodeData.id });
         this.setState({ comment: nodeData.comments[0] });
-        console.log('[click in root]');
-        console.log(nodeData);
-        console.log(this.state);
-    }
-
-    editComment(nodeId, commentData) {
-        console.log(nodeId);
-        console.log(commentData);
     }
 
     render() {
@@ -160,7 +148,7 @@ var b = 2;`,
                     <aside className="column is-2 aside hero is-fullheight">
                         <TreeExample
                             tree={this.state.tree}
-                            onClickDocument={this.onClickDocument.bind(this)}
+                            onClickNode={this.onClickNode.bind(this)}
                         />
                     </aside>
                     <div className="column is-6 code hero is-fullheight">
@@ -174,7 +162,6 @@ var b = 2;`,
                             nodeId={this.state.nodeId}
                             comment={this.state.comment}
                             options={this.state.comment_options}
-                            editComment={this.editComment.bind(this)}
                         />
                     </div>
                 </div>
