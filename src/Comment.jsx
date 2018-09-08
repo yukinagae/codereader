@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Collapse } from "@blueprintjs/core";
+import { Collapse } from "@blueprintjs/core";
 import { Controlled as CodeMirror } from 'react-codemirror2'
 
 
@@ -32,12 +32,12 @@ export default class Comment extends Component {
     render() {
         return (
             <div>
-                <Button className="comment-button" onClick={this.handleClick}>
+                <button className="bp3-button bp3-fill bp3-minimal bp3-intent-primary comment-button" onClick={this.handleClick}>
                     [{this.props.lineNumber}] {this.state.comment.split('\n')[0]}
-                </Button>
+                </button>
                 <Collapse isOpen={this.state.isOpen}>
-                    <CodeMirror
-                        value={this.state.comment}
+                <CodeMirror
+                    value={this.state.comment}
                         onBeforeChange={(editor, data, value) => {
                             this.setState({comment: value});
                         }}

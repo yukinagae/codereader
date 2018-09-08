@@ -2,6 +2,7 @@
     background-color: #252f3c;
     color: white;
     text-align: left;
+    padding-right: 0px;
 }
 
 .code {
@@ -11,7 +12,7 @@
 }
 
 .comment {
-    border-left: solid 1px #c7d2e0;
+    border-left: solid 1px #ddd;
     padding-left: 0px !important;
 }
 
