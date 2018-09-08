@@ -1,123 +1,15 @@
 import React, { Component } from 'react';
+import TreeExample from './Tree';
+import Code from './Code';
+import Comment from './Comment';
 import './App.css';
 import 'bulma/css/bulma.css'
-import { Classes, Tree } from "@blueprintjs/core";
-import { Controlled as CodeMirror } from 'react-codemirror2'
-
 import dummy_tree from './sample.json';
 
 require('codemirror/mode/javascript/javascript');
 require('codemirror/mode/markdown/markdown');
 
 const treeSearch = require('tree-search');
-
-
-class TreeExample extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            nodes: this.props.tree
-        };
-    }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps !== this.props) {
-            this.setState({ nodes: this.props.tree });
-        }
-    }
-
-    render() {
-        return (
-                <Tree
-                    contents={this.state.nodes}
-                    onNodeClick={this.handleNodeClick}
-                    onNodeCollapse={this.handleNodeCollapse}
-                    onNodeExpand={this.handleNodeExpand}
-                    className={Classes.ELEVATION_0}
-                />
-        );
-    }
-
-    handleNodeClick = (nodeData, _nodePath, e) => {
-
-        this.props.onClickNode(nodeData);
-
-        const originallySelected = nodeData.isSelected;
-        if (!e.shiftKey) {
-            this.forEachNode(this.state.nodes, n => (n.isSelected = false));
-        }
-        nodeData.isSelected = originallySelected == null ? true : !originallySelected;
-        this.setState(this.state);
-    };
-
-    handleNodeCollapse = (nodeData) => {
-        nodeData.isExpanded = false;
-        this.setState(this.state);
-    };
-
-    handleNodeExpand = (nodeData) => {
-        nodeData.isExpanded = true;
-        this.setState(this.state);
-    };
-
-    forEachNode(nodes, callback) {
-        if (nodes == null) {
-            return;
-        }
-
-        for (const node of nodes) {
-            callback(node);
-            this.forEachNode(node.childNodes, callback);
-        }
-    }
-}
-
-
-class Code extends Component {
-
-    render() {
-        return (
-            <CodeMirror value={this.props.content} options={this.props.options} />
-        );
-    }
-}
-
-class Comment extends Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            comment: this.props.comment,
-        };
-    }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps.nodeId !== this.props.nodeId || prevProps.comment !== this.props.comment) {
-            this.setState({ comment: this.props.comment });
-        }
-    }
-
-    editComment(nodeId, value) {
-        this.props.editComment(nodeId, value);
-    }
-
-    render() {
-        return (
-            <CodeMirror
-                value={this.state.comment}
-                onBeforeChange={(editor, data, value) => {
-                    this.setState({comment: value});
-                }}
-                onChange={(editor, data, value) => {
-                    this.editComment(this.props.nodeId, value);
-                }}
-                options={this.props.options}
-            />
-        );
-    }
-}
 
 
 class App extends Component {
