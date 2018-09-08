@@ -9,6 +9,8 @@ import dummy_tree from './sample.json';
 require('codemirror/mode/javascript/javascript');
 require('codemirror/mode/markdown/markdown');
 
+const treeSearch = require('tree-search');
+
 
 class TreeExample extends Component {
 
@@ -19,6 +21,11 @@ class TreeExample extends Component {
         };
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps !== this.props) {
+            this.setState({ nodes: this.props.tree });
+        }
+    }
 
     render() {
         return (
@@ -87,11 +94,7 @@ class Comment extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        console.log("[update]");
-        console.log(prevProps);
-        console.log(this.props);
         if (prevProps.nodeId !== this.props.nodeId || prevProps.comment !== this.props.comment) {
-            console.log("change comment");
             this.setState({ comment: this.props.comment });
         }
     }
@@ -105,12 +108,9 @@ class Comment extends Component {
             <CodeMirror
                 value={this.state.comment}
                 onBeforeChange={(editor, data, value) => {
-                    console.log("[onbeforechange]");
                     this.setState({comment: value});
                 }}
                 onChange={(editor, data, value) => {
-                    console.log("[onchange]");
-                    console.log(value);
                     this.editComment(this.props.nodeId, value);
                 }}
                 options={this.props.options}
@@ -142,7 +142,6 @@ class App extends Component {
                 mode: 'markdown',
 		        }
         };
-
     }
 
     onClickNode(nodeData) {
@@ -151,26 +150,17 @@ class App extends Component {
         // comment
         this.setState({ nodeId: nodeData.id });
         this.setState({ comment: nodeData.comments[0] });
-        console.log(nodeData);
     }
 
     editComment(nodeId, commentData){
-        console.log("[edit] root")
-        console.log(nodeId);
-        console.log(commentData);
-
-        console.log(this.state.tree);
         let newTree = JSON.parse(JSON.stringify(this.state.tree));
-        newTree[0].comments = [commentData];
+        const find = treeSearch('childNodes');
+        let node = find(newTree, 'id', nodeId);
+        node.comments = [commentData];
         this.setState({ tree: newTree });
-        console.log(this.state.tree);
-        this.setState({ nodeId: nodeId });
-        this.setState({ comment: commentData });
     }
 
     render() {
-        console.log("[render] root");
-        console.log(this.state.tree);
         return (
             <div className="App">
                 <div className="columns">
