@@ -7,6 +7,6 @@ body {
     font-variant-ligatures: normal;
 }
 
-.CodeMirror {
-    /* height: 100vh; */
+.code .CodeMirror {
+    height: 100vh;
 }

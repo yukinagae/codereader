@@ -91,7 +91,7 @@ export default class App extends Component {
                             newComment={this.newComment.bind(this)}
                         />
                     </div>
-                    <div className="column is-4 comment hero is-fullheight">
+                    <div className="column is-4 comment">
                         {comments}
                     </div>
                 </div>
