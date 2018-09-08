@@ -18,8 +18,8 @@ export default class Comment extends Component {
         }
     }
 
-    editComment(nodeId, value) {
-        this.props.editComment(nodeId, value);
+    editComment(nodeId, lineNumber, value) {
+        this.props.editComment(nodeId, lineNumber, value);
     }
 
     render() {
@@ -30,7 +30,7 @@ export default class Comment extends Component {
                         this.setState({comment: value});
                 }}
                 onChange={(editor, data, value) => {
-                        this.editComment(this.props.nodeId, value);
+                        this.editComment(this.props.nodeId, this.props.lineNumber, value);
                 }}
                 options={this.props.options}
             />

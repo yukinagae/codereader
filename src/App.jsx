@@ -12,7 +12,7 @@ require('codemirror/mode/markdown/markdown');
 const treeSearch = require('tree-search');
 
 
-class App extends Component {
+export default class App extends Component {
 
     constructor(props) {
         super(props);
@@ -23,7 +23,7 @@ class App extends Component {
             // each node
             nodeId: 1,
             content: '',
-            comment: '',
+            comments: {},
             // option
             code_options: {
                 readOnly: true,
@@ -41,18 +41,40 @@ class App extends Component {
         this.setState({ content: nodeData.content });
         // comment
         this.setState({ nodeId: nodeData.id });
-        this.setState({ comment: nodeData.comments[0] });
+        this.setState({ comments: nodeData.comments });
     }
 
-    editComment(nodeId, commentData){
+    editComment(nodeId, lineNumber, commentData){
         let newTree = JSON.parse(JSON.stringify(this.state.tree));
         const find = treeSearch('childNodes');
         let node = find(newTree, 'id', nodeId);
-        node.comments = [commentData];
+
+        // TODO: a comment on each line of code
+        node.comments[lineNumber] = commentData;
         this.setState({ tree: newTree });
     }
 
+    newComment(lineNumber) {
+        let newTree = JSON.parse(JSON.stringify(this.state.tree));
+        const find = treeSearch('childNodes');
+        let node = find(newTree, 'id', this.state.nodeId);
+
+        node.comments[lineNumber] = "# " + lineNumber;
+        this.setState({ tree: newTree });
+        this.setState({ comments: node.comments });
+    }
+
     render() {
+        const comments = Object.keys(this.state.comments).map((key) =>
+            <Comment
+                key={key}
+                nodeId={this.state.nodeId}
+                lineNumber={key}
+                comment={this.state.comments[key]}
+                options={this.state.comment_options}
+                editComment={this.editComment.bind(this)}
+            />
+        );
         return (
             <div className="App">
                 <div className="columns">
@@ -66,15 +88,11 @@ class App extends Component {
                         <Code
                             content={this.state.content}
                             options={this.state.code_options}
+                            newComment={this.newComment.bind(this)}
                         />
                     </div>
                     <div className="column is-4 comment hero is-fullheight">
-                        <Comment
-                            nodeId={this.state.nodeId}
-                            comment={this.state.comment}
-                            options={this.state.comment_options}
-                            editComment={this.editComment.bind(this)}
-                        />
+                        {comments}
                     </div>
                 </div>
 
@@ -82,5 +100,3 @@ class App extends Component {
         );
     }
 }
-
-export default App;
