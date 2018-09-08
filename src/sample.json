@@ -9,7 +9,10 @@
         "id": 2,
         "icon": "document",
         "label": "package.json",
-        "content": "{\r\n  \"name\": \"codereader\",\r\n  \"repository\": {\r\n    \"type\": \"git\",\r\n    \"url\": \"https:\/\/github.com\/yukinagae\/codereader.git\"\r\n  },\r\n  \"author\": \"yukinagae\",\r\n  \"email\": \"yuki.nagae1130@gmail.com\",\r\n  \"version\": \"0.1.0\",\r\n  \"private\": true,\r\n  \"dependencies\": {\r\n    \"@blueprintjs\/core\": \"^3.5.1\",\r\n    \"@fortawesome\/fontawesome-svg-core\": \"^1.2.4\",\r\n    \"@fortawesome\/free-solid-svg-icons\": \"^5.3.1\",\r\n    \"@fortawesome\/react-fontawesome\": \"^0.1.2\",\r\n    \"bulma\": \"^0.7.1\",\r\n    \"codemirror\": \"^5.40.0\",\r\n    \"json-loader\": \"^0.5.7\",\r\n    \"react\": \"^16.4.2\",\r\n    \"react-codemirror2\": \"^5.1.0\",\r\n    \"react-dom\": \"^16.4.2\",\r\n    \"react-scripts\": \"1.1.4\"\r\n  },\r\n  \"scripts\": {\r\n    \"start\": \"react-scripts start\",\r\n    \"build\": \"react-scripts build\",\r\n    \"test\": \"react-scripts test --env=jsdom\",\r\n    \"eject\": \"react-scripts eject\"\r\n  }\r\n}\r\n"
+        "content": "{\r\n  \"name\": \"codereader\",\r\n  \"repository\": {\r\n    \"type\": \"git\",\r\n    \"url\": \"https:\/\/github.com\/yukinagae\/codereader.git\"\r\n  },\r\n  \"author\": \"yukinagae\",\r\n  \"email\": \"yuki.nagae1130@gmail.com\",\r\n  \"version\": \"0.1.0\",\r\n  \"private\": true,\r\n  \"dependencies\": {\r\n    \"@blueprintjs\/core\": \"^3.5.1\",\r\n    \"@fortawesome\/fontawesome-svg-core\": \"^1.2.4\",\r\n    \"@fortawesome\/free-solid-svg-icons\": \"^5.3.1\",\r\n    \"@fortawesome\/react-fontawesome\": \"^0.1.2\",\r\n    \"bulma\": \"^0.7.1\",\r\n    \"codemirror\": \"^5.40.0\",\r\n    \"json-loader\": \"^0.5.7\",\r\n    \"react\": \"^16.4.2\",\r\n    \"react-codemirror2\": \"^5.1.0\",\r\n    \"react-dom\": \"^16.4.2\",\r\n    \"react-scripts\": \"1.1.4\"\r\n  },\r\n  \"scripts\": {\r\n    \"start\": \"react-scripts start\",\r\n    \"build\": \"react-scripts build\",\r\n    \"test\": \"react-scripts test --env=jsdom\",\r\n    \"eject\": \"react-scripts eject\"\r\n  }\r\n}\r\n",
+        "comments": [
+            "# hogehoge"
+        ]
       },
       {
         "id": 3,
@@ -20,7 +23,10 @@
             "id": 4,
             "icon": "document",
             "label": "index.js",
-            "content": "import React from 'react';\r\nimport ReactDOM from 'react-dom';\r\nimport '.\/index.css';\r\nimport App from '.\/App';\r\nimport registerServiceWorker from '.\/registerServiceWorker';\r\n\r\nReactDOM.render(<App \/>, document.getElementById('root'));\r\nregisterServiceWorker();\r\n"
+            "content": "import React from 'react';\r\nimport ReactDOM from 'react-dom';\r\nimport '.\/index.css';\r\nimport App from '.\/App';\r\nimport registerServiceWorker from '.\/registerServiceWorker';\r\n\r\nReactDOM.render(<App \/>, document.getElementById('root'));\r\nregisterServiceWorker();\r\n",
+            "comments": [
+                "# foobar"
+            ]
           }
         ]
       }

@@ -72,7 +72,43 @@ class Code extends Component {
     render() {
         return (
             <CodeMirror value={this.props.content} options={this.props.options} />
-        )
+        );
+    }
+}
+
+class Comment extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            nodeId: this.props.nodeId,
+            comment: this.props.comment,
+        }
+    }
+
+    editComment(value) {
+        console.log("[edit]");
+        this.setState({comment: value});
+        this.props.editComment(this.state.nodeId, value);
+    }
+
+    render() {
+        console.log("[render] comment");
+        console.log(this.state);
+        return (
+            <CodeMirror
+                value={this.state.comment}
+                onBeforeChange={(editor, data, value) => {
+                    this.setState({comment: value});
+                }}
+                onChange={(editor, data, value) => {
+                    console.log(value);
+                        this.editComment(value);
+                }}
+                options={this.props.options}
+            />
+        );
     }
 }
 
@@ -83,14 +119,15 @@ class App extends Component {
         super(props);
 
         this.state = {
+            tree: dummy_tree,
+            nodeId: 1,
             content: `console.log("empty");
 var a = 1;
 var b = 2;`,
             comment: `# comment
 
-- aa
-- bb
-- cc`,
+- a
+- b`,
             code_options: {
                 readOnly: true,
                 lineNumbers: true,
@@ -104,6 +141,16 @@ var b = 2;`,
 
     onClickDocument(nodeData) {
         this.setState({ content: nodeData.content });
+        this.setState({ nodeId: nodeData.id });
+        this.setState({ comment: nodeData.comments[0] });
+        console.log('[click in root]');
+        console.log(nodeData);
+        console.log(this.state);
+    }
+
+    editComment(nodeId, commentData) {
+        console.log(nodeId);
+        console.log(commentData);
     }
 
     render() {
@@ -111,20 +158,23 @@ var b = 2;`,
             <div className="App">
                 <div className="columns">
                     <aside className="column is-2 aside hero is-fullheight">
-                        <TreeExample tree={dummy_tree} onClickDocument={this.onClickDocument.bind(this)} />
+                        <TreeExample
+                            tree={this.state.tree}
+                            onClickDocument={this.onClickDocument.bind(this)}
+                        />
                     </aside>
                     <div className="column is-6 code hero is-fullheight">
-                        <Code content={this.state.content} options={this.state.code_options} />
+                        <Code
+                            content={this.state.content}
+                            options={this.state.code_options}
+                        />
                     </div>
                     <div className="column is-4 comment hero is-fullheight">
-                        <CodeMirror
-                            value={this.state.comment}
-                            onBeforeChange={(editor, data, value) => {
-                                    this.setState({comment: value});
-                            }}
-                            onChange={(editor, data, value) => {
-                            }}
+                        <Comment
+                            nodeId={this.state.nodeId}
+                            comment={this.state.comment}
                             options={this.state.comment_options}
+                            editComment={this.editComment.bind(this)}
                         />
                     </div>
                 </div>
