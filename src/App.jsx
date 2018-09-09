@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TreeExample from './Tree';
 import Code from './Code';
 import Comment from './Comment';
+import { Icon, InputGroup, Spinner } from "@blueprintjs/core";
 import './App.css';
 import 'bulma/css/bulma.css'
 import dummy_tree from './sample.json';
@@ -16,6 +17,11 @@ export default class App extends Component {
 
     constructor(props) {
         super(props);
+
+        // TODO: set bookmark
+        /* const find = treeSearch('childNodes');
+         * let node = find(dummy_tree, 'id', 2);
+         * node.secondaryLabel = (<Icon icon="bookmark" />); */
 
         this.state = {
             // base tree
@@ -32,8 +38,13 @@ export default class App extends Component {
 		        },
             comment_options: {
                 mode: 'markdown',
-		        }
+		        },
+            // bookmark
+            bookmarkId: 4,
+            // search
+            searchValue: "",
         };
+
     }
 
     onClickNode(nodeData) {
@@ -64,7 +75,14 @@ export default class App extends Component {
         this.setState({ comments: node.comments });
     }
 
+    handleSearchChange(e) {
+        this.setState({ searchValue: e.target.value });
+    }
+
     render() {
+
+        const maybeSpinner = this.state.searchValue ? <Spinner size={Icon.SIZE_STANDARD} /> : undefined;
+
         const comments = Object.keys(this.state.comments).map((key) =>
             <Comment
                 key={key}
@@ -78,7 +96,18 @@ export default class App extends Component {
         return (
             <div className="App">
                 <div className="columns">
-                    <aside className="column is-2 aside hero is-fullheight">
+                    <aside className="column is-2 aside">
+
+                        <InputGroup
+                            disabled={false}
+                            large={false}
+                            leftIcon="search"
+                            onChange={this.handleSearchChange.bind(this)}
+                            placeholder="Search..."
+                            rightElement={maybeSpinner}
+                            value={this.state.searchValue}
+                        />
+
                         <TreeExample
                             tree={this.state.tree}
                             onClickNode={this.onClickNode.bind(this)}
