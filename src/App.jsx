@@ -11,17 +11,13 @@ require('codemirror/mode/javascript/javascript');
 require('codemirror/mode/markdown/markdown');
 
 const treeSearch = require('tree-search');
+/* const deepCleaner = require('deep-cleaner'); */
 
 
 export default class App extends Component {
 
     constructor(props) {
         super(props);
-
-        // TODO: set bookmark
-        /* const find = treeSearch('childNodes');
-         * let node = find(dummy_tree, 'id', 2);
-         * node.secondaryLabel = (<Icon icon="bookmark" />); */
 
         this.state = {
             // base tree
@@ -39,8 +35,6 @@ export default class App extends Component {
             comment_options: {
                 mode: 'markdown',
 		        },
-            // bookmark
-            bookmarkId: 4,
             // search
             searchValue: "",
         };
@@ -53,6 +47,19 @@ export default class App extends Component {
         // comment
         this.setState({ nodeId: nodeData.id });
         this.setState({ comments: nodeData.comments });
+        /* 
+         *         // TODO: remove all secondaryLabel properties first
+         *         let newTree = JSON.parse(JSON.stringify(this.state.tree));
+         *         deepCleaner(newTree, ['bookmark']);
+         * 
+         *         // TODO: set bookmark
+         *         const find = treeSearch('childNodes');
+         *         let node = find(newTree, 'id', nodeData.id);
+         *         node.bookmark = true;
+         *         node.secondaryLabel = (<Icon icon="bookmark" />);
+         * 
+         *         this.setState({ tree: newTree }); */
+        /* console.log(this.state); */
     }
 
     editComment(nodeId, lineNumber, commentData){
