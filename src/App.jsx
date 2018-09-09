@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import TreeExample from './Tree';
 import Code from './Code';
 import Comment from './Comment';
-import { Icon, InputGroup, Spinner } from "@blueprintjs/core";
+import { Icon, InputGroup, Spinner, Tag } from "@blueprintjs/core";
 import './App.css';
 import 'bulma/css/bulma.css'
 import dummy_tree from './sample.json';
@@ -106,6 +106,7 @@ export default class App extends Component {
                     <aside className="column is-2 aside">
 
                         <InputGroup
+                            className="code-search"
                             disabled={false}
                             large={false}
                             leftIcon="search"
@@ -115,19 +116,39 @@ export default class App extends Component {
                             value={this.state.searchValue}
                         />
 
+
                         <TreeExample
                             tree={this.state.tree}
                             onClickNode={this.onClickNode.bind(this)}
                         />
+
+                        <div className="code-tag">
+                            <ul>
+                                <li>
+                                    <Icon icon="tag" />&nbsp;todo
+                                </li>
+                                <li>
+                                    <Icon icon="tag" />&nbsp;done
+                                </li>
+                                <li>
+                                    <Icon icon="tag" />&nbsp;pending
+                                </li>
+                            </ul>
+                        </div>
+
                     </aside>
                     <div className="column is-6 code hero is-fullheight">
 
-                        <InputGroup
-                            disabled={false}
-                            large={false}
-                            leftIcon="tag"
-                            placeholder="Add Tags"
-                        />
+                        <div>
+                                <Tag key={"todo"} large={true} onRemove={() => {}}>todo</Tag>
+                        </div>
+                                <InputGroup
+                                    disabled={false}
+                                    large={false}
+                                    leftIcon="tag"
+                                    placeholder="Add Tags"
+                                />
+
 
                         <Code
                             content={this.state.content}

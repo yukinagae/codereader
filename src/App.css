@@ -14,8 +14,21 @@
     padding-right: 0px !important;
 }
 
+.code-search {
+    margin-bottom: 10px;
+}
+
 .code .bp3-input {
     border-radius: 0px;
+}
+
+.code-tag {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.code-tag ul li {
+    margin-bottom: 10px;
 }
 
 .comment {
