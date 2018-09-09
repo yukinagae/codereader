@@ -114,6 +114,14 @@ export default class App extends Component {
                         />
                     </aside>
                     <div className="column is-6 code hero is-fullheight">
+
+                        <InputGroup
+                            disabled={false}
+                            large={false}
+                            leftIcon="tag"
+                            placeholder="Add Tags"
+                        />
+
                         <Code
                             content={this.state.content}
                             options={this.state.code_options}

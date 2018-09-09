@@ -11,6 +11,11 @@
     color: black;
     padding-left: 0px !important;
     padding-bottom: 0px !important;
+    padding-right: 0px !important;
+}
+
+.code .bp3-input {
+    border-radius: 0px;
 }
 
 .comment {
