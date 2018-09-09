@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Collapse } from "@blueprintjs/core";
+import { Collapse, Icon } from "@blueprintjs/core";
 import { Controlled as CodeMirror } from 'react-codemirror2'
 
 
@@ -33,6 +33,7 @@ export default class Comment extends Component {
         return (
             <div>
                 <button className="bp3-button bp3-fill bp3-minimal bp3-intent-primary comment-button" onClick={this.handleClick}>
+                    {this.state.isOpen ? <Icon icon="chevron-down" /> : <Icon icon="chevron-right" />} &nbsp;
                     [{this.props.lineNumber}] {this.state.comment.split('\n')[0]}
                 </button>
                 <Collapse isOpen={this.state.isOpen}>
