@@ -16,9 +16,9 @@
     "bulma": "^0.7.1",
     "codemirror": "^5.40.0",
     "deep-cleaner": "^1.1.2",
-    "react": "^16.4.2",
+    "react": "^16.14.0",
     "react-codemirror2": "^5.1.0",
-    "react-dom": "^16.4.2",
+    "react-dom": "^16.14.0",
     "react-scripts": "1.1.4",
     "tree-search": "^1.0.0"
   },
